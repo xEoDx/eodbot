@@ -4,9 +4,7 @@ import time
 
 _MAX_SLEEP_TIME = 15
 _MIN_SLEEP_TIME = 3
-class HipChatMonitor:
-	
-	
+class HipChatMonitor:	
 	def __init__(self):
 		print("Initializing HipChatMonitor")
 		self.sleepTime = _MIN_SLEEP_TIME

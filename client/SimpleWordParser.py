@@ -1,12 +1,3 @@
-from enum import Enum
-class MessageType(Enum):
-	order = 0,
-	text = 1,
-	question = 2,
-	exclamation = 3
-	
-
-	
 class SimpleWordParser:
 	def __init__(self, textHooksDictionary):
 		print("Initializing SimpleWordParser")
@@ -25,15 +16,3 @@ class SimpleWordParser:
 			if(word in self.textHooksDictionary):
 				print(self.textHooksDictionary[word])
 				return self.textHooksDictionary[word]
-
-'''	
-parser  = SimpleWordParser({'hello': 'morning', 'goodbye': 'bye bitch', 'hey': 'hej hej'})
-parser.parse("Testtt")
-parser.parse("hello")
-parser.parse("goodbie")
-parser.parse("goodbye")
-parser.parse("goodbie")
-parser.parse("goodbie hey")
-parser.addKey({'goodbie':'learn how to wriet'})
-parser.parse("goodbie")
-'''
