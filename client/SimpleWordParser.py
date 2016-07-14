@@ -23,7 +23,8 @@ class SimpleWordParser:
 		
 		for word in splittedText:
 			if(word in self.textHooksDictionary):
-				print(self.textHooksDictionary[word])	
+				print(self.textHooksDictionary[word])
+				return self.textHooksDictionary[word]
 
 '''	
 parser  = SimpleWordParser({'hello': 'morning', 'goodbye': 'bye bitch', 'hey': 'hej hej'})
