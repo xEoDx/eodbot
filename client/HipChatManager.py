@@ -2,28 +2,36 @@ import SimpleWordParser
 import json
 import requests
 import time
+import configparser
+
+MAX_SLEEP_TIME = 15
+MIN_SLEEP_TIME = 3
 
 class HipChatManager:
-	
+
 	def __init__(self):
 		print("Initializing HipChatManager")
-		self.read_auth_token=''
-		self.write_auth_token=''
-		#TODO have them static const variables
-		self.MAX_SLEEP_TIME = 15
-		self.MIN_SLEEP_TIME = 3
-		self.sleepTime = self.MIN_SLEEP_TIME
+		self.initializeHipChatConfiguration()
+				
+		self.sleepTime = MIN_SLEEP_TIME
 		self.lastIdChecked = ""
 		self.simpleWordParser = SimpleWordParser.SimpleWordParser({'hello': 'morning', 'goodbye': 'bye bitch', 'hey': 'hej hej'})
-		self.url = 'http://hipchat.com/v2/room/VictorTest/history/latest?max-results=1&auth_token='+self.read_auth_token
+		self.url = 'http://hipchat.com/v2/room/'+self.room_name+'/history/latest?max-results=1&auth_token='+self.read_auth_token
 		
-		
+	
+	def initializeHipChatConfiguration(self):
+		config = configparser.ConfigParser()
+		config.read('config.ini')
+		self.room_name=config['HIPCHAT']['hipchat.room_name']
+		self.read_auth_token=config['HIPCHAT']['hipchat.read_auth_token']
+		self.write_auth_token=config['HIPCHAT']['hipchat.write_auth_token']
+	
 	def adjustInterval(self, failed):
 		if(failed == "true"):
-			if(self.sleepTime < self.MAX_SLEEP_TIME):			
+			if(self.sleepTime < MAX_SLEEP_TIME):			
 				self.sleepTime += 1
 		else:
-			self.sleepTime = self.MIN_SLEEP_TIME
+			self.sleepTime = MIN_SLEEP_TIME
 
 	def fetch(self):		
 		response = requests.get(self.url, data="")
