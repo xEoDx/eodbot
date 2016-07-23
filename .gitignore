@@ -1,2 +1,5 @@
 __pycache__
 client/config.ini
+server/target/*
+server/.idea/
+*.iml
