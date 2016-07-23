@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 
 /**
  * Created by Victor on 18/07/2016.
@@ -16,17 +15,18 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.eodbot")
 public class ServletConfiguration extends WebMvcConfigurerAdapter {
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setPrefix("/");
         viewResolver.setSuffix(".html");
         registry.viewResolver(viewResolver);
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/WEB-INF/views//**").addResourceLocations("/WEB-INF/views/");
+        registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/views/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/views/");
     }
 }
