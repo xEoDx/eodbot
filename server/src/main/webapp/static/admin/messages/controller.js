@@ -1,15 +1,15 @@
 /**
  * Created by Victor on 3/20/2016.
  */
-angular.module('hipchatMessagesModule')
-    .controller('HipChatMessagesCtrl', ['$scope', '$filter', 'MessagesServices', function ($scope, $filter, MessagesService) {
+angular.module('hipChatMessagesModule')
+    .controller('HipChatMessagesCtrl', ['$scope', '$filter', 'MessagesService',
+        function ($scope, $filter, MessagesService) {
         console.log("HipChatMessagesCtrl initialized");
 
-        var initializeMotes = function () {
+        $scope.initializeMotes = function () {
             MessagesService.getMotes().then(function (data) {
                 $scope.messages = data;
                 console.log("Listing motes!!!! "+$scope.messages);
-                console.log("Listing motes2!!!! "+MessagesService.messages);
 
             }, function (error) {
                 console.log("Error loading motes: " + error);
@@ -22,6 +22,6 @@ angular.module('hipchatMessagesModule')
         }, true);
 
 
-        initializeMotes();
+        $scope.initializeMotes();
 
     }]);

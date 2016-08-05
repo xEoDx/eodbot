@@ -1,7 +1,7 @@
 /**
  * Created by Victor on 3/27/2016.
  */
-angular.module('hipchatMessagesModule')
+angular.module('hipChatMessagesModule')
     .factory('MessagesService', ['$http', '$q', function ($http, $q) {
         console.log("MessagesService initialized");
         var messages = [];
@@ -10,20 +10,20 @@ angular.module('hipchatMessagesModule')
             getMotes: function () {
                 return $http({
                     method: 'GET',
-                    url: '/rest/message/get'
+                    url: '/message/get'
                 }).then(function successCallback(response) {
                     this.messages = response.data;
-                    console.log("Updating messages on the servicve");
+                    console.log("Updating messages on the service");
                     return response.data;
                 }, function errorCallback(response) {
                     return $q.reject(response);
                 });
             },
-            update: function (mote) {
+            update: function (message) {
                 return $http({
                     method: 'POST',
-                    url: '/rest/message/update/',
-                    data: mote
+                    url: '/message/update/',
+                    data: message
                 }).then(function successCallback(response) {
                     return response.data;
                 }, function errorCallback(response) {

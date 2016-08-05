@@ -5,16 +5,16 @@ angular.module('routingModule', ['ngRoute'])
     .config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider)
     {
         console.log("Initializing routeProvider");
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: true
-        });
+       /* $locationProvider.html5Mode({
+            enabled: true
+        });*/
         $routeProvider
             .when('/', {
-                templateUrl: 'admin/messages/messages.html'
+                templateUrl: 'static/admin/messages/messages.html',
+                controller: 'HipChatMessagesCtrl'
             })
-            .when('/motes', {
-                templateUrl: 'admin/messages/messages.html',
+            .when('/messages', {
+                templateUrl: 'static/admin/messages/messages.html',
                 controller: 'HipChatMessagesCtrl'
             })
             .otherwise({
