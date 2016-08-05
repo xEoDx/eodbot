@@ -21,8 +21,8 @@ public class MessageMapDictionary implements Serializable {
     @Column(name = "message_key")
     private String key;
 
-    @ElementCollection(targetClass = String.class)
-    @Column(name = "responses")
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @Column(name = "response")
     private List<String> responses;
 
     public MessageMapDictionary() {
@@ -57,29 +57,5 @@ public class MessageMapDictionary implements Serializable {
 
     public void setResponses(List<String> responses) {
         this.responses = responses;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        MessageMapDictionary that = (MessageMapDictionary) o;
-
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
-
-    @Override
-    public String toString() {
-        return "MessageMapDictionary{" +
-                "id=" + id +
-                ", key='" + key + '\'' +
-                ", responses=" + responses +
-                '}';
     }
 }

@@ -10,7 +10,7 @@ angular.module('hipChatMessagesModule')
             getMotes: function () {
                 return $http({
                     method: 'GET',
-                    url: '/message/get'
+                    url: '/message'
                 }).then(function successCallback(response) {
                     this.messages = response.data;
                     console.log("Updating messages on the service");
@@ -22,7 +22,7 @@ angular.module('hipChatMessagesModule')
             update: function (message) {
                 return $http({
                     method: 'POST',
-                    url: '/message/update/',
+                    url: '/message',
                     data: message
                 }).then(function successCallback(response) {
                     return response.data;

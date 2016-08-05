@@ -25,9 +25,7 @@
 
     <%--<base href="/resources/">--%>
 </head>
-<body ng-app="hipChatMessagesModule" >
-<p>Welcome bitch: 1+1 = {{ 1 + 1 }}</p>
-<br/>
+<body ng-app="hipChatMessagesModule">
 <div ng-view>
 
 </div>

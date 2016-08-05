@@ -5,7 +5,7 @@ angular.module('hipChatMessagesModule')
     .controller('HipChatMessagesCtrl', ['$scope', '$filter', 'MessagesService',
         function ($scope, $filter, MessagesService) {
         console.log("HipChatMessagesCtrl initialized");
-
+        $scope.messages = [];
         $scope.initializeMotes = function () {
             MessagesService.getMotes().then(function (data) {
                 $scope.messages = data;
@@ -17,9 +17,9 @@ angular.module('hipChatMessagesModule')
 
         };
 
-        $scope.$watchCollection(function(){return MessagesService.messages;}, function (newValue) {
+        /*$scope.$watchCollection(function(){return MessagesService.messages;}, function (newValue) {
             console.log("new valuies of motes!" + JSON.stringify(newValue));
-        }, true);
+        }, true);*/
 
 
         $scope.initializeMotes();

@@ -6,15 +6,32 @@
             <th>#</th>
             <th>Key</th>
             <th>Value</th>
+            <th>Edit</th>
         </tr>
 
         </thead>
         <tbody>
         <tr ng-repeat="message in messages">
-            <td>{{message.id}}</td>
-            <td>{{message.key}}</td>
-            <td></td>
+            <td class="col-sm-1">{{message.id}}</td>
+            <td class="col-sm-5">{{message.key}}</td>
+            <td class="col-sm-5">
+                <table class="table table-strip">
+                    <tbody>
+                        <tr class="row" ng-repeat="response in message.responses">
+                            <td>{{response}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td class="col-sm-1">
+                <button type="button" class="btn btn-primary" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
+    <button type="button" class="btn btn-success" aria-label="Left Align">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+    </button>
 </div>

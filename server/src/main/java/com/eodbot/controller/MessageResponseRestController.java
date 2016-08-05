@@ -21,9 +21,9 @@ import java.util.List;
 public class MessageResponseRestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageResponseRestController.class);
     @Autowired
-    MessageResponseService messageResponseService;
+    private MessageResponseService messageResponseService;
 
-    @RequestMapping(value = "/message/", method = RequestMethod.GET)
+    @RequestMapping(value = "/message", method = RequestMethod.GET)
     public ResponseEntity<List<MessageMapDictionary>> listAll() {
         LOGGER.info("Listing all messages");
         List<MessageMapDictionary> messageMapDictionaries = messageResponseService.findAll();
@@ -33,7 +33,7 @@ public class MessageResponseRestController {
         return new ResponseEntity<>(messageMapDictionaries, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/message/", method = RequestMethod.POST)
+    @RequestMapping(value = "/message", method = RequestMethod.POST)
     public ResponseEntity<List<MessageMapDictionary>> save(@RequestBody MessageMapDictionary messageMapDictionary) {
         LOGGER.info("Creating MessageMapDictionary " + messageMapDictionary);
 

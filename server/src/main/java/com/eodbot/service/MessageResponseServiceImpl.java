@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 public class MessageResponseServiceImpl implements MessageResponseService {
     @Autowired
-    MessageResponseRepository messageResponseRepository;
+    private MessageResponseRepository messageResponseRepository;
 
     @Override
     public void save(MessageMapDictionary messageMapDictionary) {
