@@ -5,6 +5,9 @@ angular.module('hipChatMessagesModule')
     .controller('HipChatMessagesCtrl', ['$scope', '$log','$filter', '$uibModal', 'MessagesService',
         function ($scope, $log, $filter, $uibModal, MessagesService) {
             $log.info("HipChatMessagesCtrl initialized");
+            $scope.showAlert = false;
+            $scope.alertMessage = "";
+
             $scope.messages = [];
             $scope.initializeMotes = function () {
                 MessagesService.list().then(function (data) {
@@ -13,6 +16,7 @@ angular.module('hipChatMessagesModule')
 
                 }, function (error) {
                     $log.warn("Error loading messages: ", error);
+                    setAlertStatus("error", "Error on listing messages!");
                 });
 
             };
@@ -20,6 +24,10 @@ angular.module('hipChatMessagesModule')
             $scope.delete = function (message) {
                 MessagesService.remove(message.id).then(function (response) {
                     $scope.messages = response;
+                    setAlertStatus("success", "Message id "+message.id+" has been deleted!");
+                }, function(error){
+                    setAlertStatus("error", "Error when deleting message "+message.id);
+
                 });
             };
 
@@ -38,12 +46,27 @@ angular.module('hipChatMessagesModule')
                     MessagesService.update(updatedItem).then(function (response) {
                         $log.log("Done! Response is: ", response);
                         $scope.messages = response;
+                        setAlertStatus("success", "Message id "+updatedItem.id+" has been updated!");
+                    }, function(error){
+                        setAlertStatus("error", "Error on updating message id "+updatedItem.id);
+
                     });
 
                 }, function () {
                     $log.log('Modal dismissed at: ' + new Date());
                 });
             };
+
+
+            $scope.hideAlert = function() {
+                $scope.showAlert = false;
+            };
+
+            function setAlertStatus(alertType, text){
+                $scope.showAlert = true;
+                $scope.alertType = alertType;
+                $scope.alertMessage = text;
+            }
 
             $scope.initializeMotes();
 

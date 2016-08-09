@@ -6,6 +6,10 @@
     </div>
 
     <div class="panel-body">
+        <div class="alert alert-{{alertType}} alert-dismissible" role="alert" ng-show="showAlert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hideAlert()"><span aria-hidden="true">&times;</span></button>
+            <p>{{alertMessage}}</p>
+        </div>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -60,18 +64,18 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label for="keyMessage">Key message: </label>
+            <label for="keyMessage">Whenever someone says ...: </label>
             <input type="text" class="form-control" id="keyMessage" placeholder="Word or sentence to react..."
                    ng-model="message.key"/>
         </div>
         <hr/>
         <div class="form-group">
-            <label for="keyMessage">Possible answers (will show randomly): </label>
+            <label for="keyMessage">I will respond (randomly one of the following)...: </label>
 
             <div ng-repeat="response in message.responses track by $index" class="form-inline">
                 <div class="input-group col-sm-12">
                     <input type="text" class="form-control" ng-model="response.text"
-                           placeholder="Sentence to reply when the key message is shown"/>
+                           placeholder="Put here a troll message"/>
 
                     <span class="input-group-btn">
                         <button class="btn btn-warning" type="button" aria-label="Left Align"

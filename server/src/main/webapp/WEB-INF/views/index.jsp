@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
-<html lang="en"> <!--  data-ng-app="eodbot" -->
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
     <title>Welcome to EodBot!</title>
@@ -22,8 +22,6 @@
     <script src="<c:url value='/static/admin/app.js' />"></script>
     <script src="<c:url value='/static/admin/messages/service.js' />"></script>
     <script src="<c:url value='/static/admin/messages/controller.js' />"></script>
-
-    <%--<base href="/resources/">--%>
 </head>
 <body ng-app="hipChatMessagesModule">
 <div ng-view class="container">
