@@ -1,1 +1,1 @@
-angular.module('hipChatMessagesModule', ['routingModule']);
+angular.module('hipChatMessagesModule', ['routingModule', 'ui.bootstrap']);

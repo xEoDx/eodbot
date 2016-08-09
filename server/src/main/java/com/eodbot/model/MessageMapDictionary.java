@@ -3,7 +3,7 @@ package com.eodbot.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class MessageMapDictionary implements Serializable {
     private List<String> responses;
 
     public MessageMapDictionary() {
-        this(0, "", Collections.EMPTY_LIST);
+        this(0, "", new ArrayList<>());
     }
 
     public MessageMapDictionary(long id, String key, List<String> responses) {

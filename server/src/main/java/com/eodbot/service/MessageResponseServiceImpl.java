@@ -31,4 +31,9 @@ public class MessageResponseServiceImpl implements MessageResponseService {
     public MessageMapDictionary findById(Long id) {
         return messageResponseRepository.findOne(id);
     }
+
+    @Override
+    public void remove(Long id) {
+        messageResponseRepository.delete(id);
+    }
 }

@@ -11,4 +11,5 @@ public interface MessageResponseService {
     void save(MessageMapDictionary messageMapDictionary);
     List<MessageMapDictionary> findAll();
     MessageMapDictionary findById(Long id);
+    void remove(Long id);
 }

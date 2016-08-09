@@ -1,37 +1,96 @@
-<div ng-controller="HipChatMessagesCtrl" class="panel panel-body">
-    <h2>Welcome to EodBot!</h2>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Key</th>
-            <th>Value</th>
-            <th>Edit</th>
-        </tr>
+<div ng-controller="HipChatMessagesCtrl" class="panel panel-default">
+    <div class="panel-heading">
 
-        </thead>
-        <tbody>
-        <tr ng-repeat="message in messages">
-            <td class="col-sm-1">{{message.id}}</td>
-            <td class="col-sm-5">{{message.key}}</td>
-            <td class="col-sm-5">
-                <table class="table table-strip">
-                    <tbody>
+        <h2>EoD BOT</h2>
+        <h5>The ultimate HipChat troll tool.</h5>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Message to react</th>
+                <th>Answers to that message</th>
+                <th>Edit</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr ng-repeat="message in messages">
+                <td class="col-sm-1">{{message.id}}</td>
+                <td class="col-sm-5">{{message.key}}</td>
+                <td class="col-sm-5">
+                    <table class="table table-strip">
+                        <tbody>
                         <tr class="row" ng-repeat="response in message.responses">
-                            <td>{{response}}</td>
+                            <td>{{response.text}}</td>
                         </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td class="col-sm-1">
-                <button type="button" class="btn btn-primary" aria-label="Left Align">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-success" aria-label="Left Align">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
-    </button>
+                        </tbody>
+                    </table>
+                </td>
+                <td class="col-sm-1">
+                    <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" ng-click="open(message)">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" ng-click="delete(message)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="panel-footer">
+        <button type="button" class="btn btn-success" aria-label="Left Align" ng-click="open()">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+        </button>
+    </div>
+
 </div>
+
+
+<script id="messagesModal.html" type="text/ng-template">
+    <div class="modal-header">
+        <h3>
+            <div ng-show="message.id != 0">Editing troll answers for message {{ message.key }}</div>
+            <div ng-show="message.id == 0">New message to troll</div>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="keyMessage">Key message: </label>
+            <input type="text" class="form-control" id="keyMessage" placeholder="Word or sentence to react..."
+                   ng-model="message.key"/>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label for="keyMessage">Possible answers (will show randomly): </label>
+
+            <div ng-repeat="response in message.responses track by $index" class="form-inline">
+                <div class="input-group col-sm-12">
+                    <input type="text" class="form-control" ng-model="response.text"
+                           placeholder="Sentence to reply when the key message is shown"/>
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-warning" type="button" aria-label="Left Align"
+                                ng-click="removeAnswer($index)">
+                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <br>
+            <button type="button" class="btn btn-success" aria-label="Left Align" ng-click="addAnswer()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">OK</button>
+        <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

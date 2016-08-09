@@ -26,7 +26,7 @@
     <%--<base href="/resources/">--%>
 </head>
 <body ng-app="hipChatMessagesModule">
-<div ng-view>
+<div ng-view class="container">
 
 </div>
 </body>

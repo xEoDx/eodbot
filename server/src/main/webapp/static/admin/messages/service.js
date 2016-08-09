@@ -2,19 +2,31 @@
  * Created by Victor on 3/27/2016.
  */
 angular.module('hipChatMessagesModule')
-    .factory('MessagesService', ['$http', '$q', function ($http, $q) {
-        console.log("MessagesService initialized");
-        var messages = [];
+    .factory('MessagesService', ['$http', '$q', '$log', function ($http, $q, $log) {
+        $log.info("MessagesService initialized");
+        function parseMessages(response) {
+            var messages = [];
+            response.data.forEach(function (message) {
+                var responses = [];
+                message.responses.forEach(function (response) {
+                    responses.push({text: response});
+                });
+                messages.push({
+                    id: message.id,
+                    key: message.key,
+                    responses: responses
+                });
+            });
+            return messages;
+        }
 
         return {
-            getMotes: function () {
+            list: function () {
                 return $http({
                     method: 'GET',
                     url: '/message'
                 }).then(function successCallback(response) {
-                    this.messages = response.data;
-                    console.log("Updating messages on the service");
-                    return response.data;
+                    return parseMessages(response);
                 }, function errorCallback(response) {
                     return $q.reject(response);
                 });
@@ -25,11 +37,24 @@ angular.module('hipChatMessagesModule')
                     url: '/message',
                     data: message
                 }).then(function successCallback(response) {
-                    return response.data;
+                    $log.info("Message ",message," has been updated");
+                    return parseMessages(response);
                 }, function errorCallback(response) {
+                    $log.error("Error on updating message ",message);
                     return $q.reject(response);
                 });
             },
-            messages: messages
+            remove: function (id) {
+                return $http({
+                    method: 'DELETE',
+                    url: '/message/'+id
+                }).then(function successCallback(response){
+                    $log.info("Message ID ",id," has been deleted");
+                    return parseMessages(response);
+                }, function errorCallback(response) {
+                    $log.error("Error on removing message ID ",id);
+                    return $q.reject(response);
+                });
+            }
         }
     }]);
