@@ -40,7 +40,7 @@ angular.module('hipChatMessagesModule')
                     $log.info("Message ",message," has been updated");
                     return parseMessages(response);
                 }, function errorCallback(response) {
-                    $log.error("Error on updating message ",message);
+                    $log.error("Error on updating message: ",response);
                     return $q.reject(response);
                 });
             },

@@ -1,1 +1,1 @@
-angular.module('hipChatMessagesModule', ['routingModule', 'ui.bootstrap']);
+angular.module('hipChatMessagesModule', ['routingModule', 'ui.bootstrap', 'ngTable']);

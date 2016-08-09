@@ -2,31 +2,30 @@
  * Created by Victor on 3/20/2016.
  */
 angular.module('hipChatMessagesModule')
-    .controller('HipChatMessagesCtrl', ['$scope', '$log','$filter', '$uibModal', 'MessagesService',
-        function ($scope, $log, $filter, $uibModal, MessagesService) {
+    .controller('HipChatMessagesCtrl', ['$scope', '$log','$filter', '$uibModal', 'MessagesService', 'NgTableParams',
+        function ($scope, $log, $filter, $uibModal, MessagesService, NgTableParams) {
             $log.info("HipChatMessagesCtrl initialized");
             $scope.showAlert = false;
             $scope.alertMessage = "";
 
-            $scope.messages = [];
             $scope.initializeMotes = function () {
                 MessagesService.list().then(function (data) {
-                    $scope.messages = data;
-                    $log.log("Listing messages:  ", $scope.messages);
+                    updateTable(data);
+                    $log.log("Listing messages:  ", data);
 
                 }, function (error) {
                     $log.warn("Error loading messages: ", error);
-                    setAlertStatus("error", "Error on listing messages!");
+                    setAlertStatus("error", error.data.message);
                 });
 
             };
 
             $scope.delete = function (message) {
                 MessagesService.remove(message.id).then(function (response) {
-                    $scope.messages = response;
+                    updateTable(response);
                     setAlertStatus("success", "Message id "+message.id+" has been deleted!");
                 }, function(error){
-                    setAlertStatus("error", "Error when deleting message "+message.id);
+                    setAlertStatus("error", error.data.message);
 
                 });
             };
@@ -45,17 +44,47 @@ angular.module('hipChatMessagesModule')
                 modalInstance.result.then(function (updatedItem) {
                     MessagesService.update(updatedItem).then(function (response) {
                         $log.log("Done! Response is: ", response);
-                        $scope.messages = response;
+                        updateTable(response);
                         setAlertStatus("success", "Message id "+updatedItem.id+" has been updated!");
                     }, function(error){
-                        setAlertStatus("error", "Error on updating message id "+updatedItem.id);
-
+                        setAlertStatus("error", error.data.message);
                     });
 
                 }, function () {
                     $log.log('Modal dismissed at: ' + new Date());
                 });
             };
+
+            function updateTable(data){
+                $scope.tableParams.reload().then(function(r) {
+                    if (data.length === 0 && $scope.tableParams.total() > 0) {
+                        $scope.tableParams.page($scope.tableParams.page() - 1);
+                        $scope.tableParams.reload();
+                    }
+                });
+            }
+
+
+            $scope.tableParams = new NgTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                getData: function(params) {
+                    // ajax request to api
+                    return MessagesService.list().then(function(data) {
+                        var orderedData = params.sorting() ?
+                            $filter('orderBy')(data, params.orderBy()) : $scope.items;
+
+                        orderedData = params.filter() ?
+                            $filter('filter')(orderedData, params.filter()) : orderedData;
+
+                        orderedData = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+                        params.total(orderedData.length); // set total for recalc pagination
+                        return orderedData;
+                    });
+                }
+            });
 
 
             $scope.hideAlert = function() {
@@ -64,7 +93,7 @@ angular.module('hipChatMessagesModule')
 
             function setAlertStatus(alertType, text){
                 $scope.showAlert = true;
-                $scope.alertType = alertType;
+                $scope.alertType = "alert-"+alertType;
                 $scope.alertMessage = text;
             }
 

@@ -1,5 +1,6 @@
 package com.eodbot.controller;
 
+import com.eodbot.model.ErrorMessage;
 import com.eodbot.model.MessageMapDictionary;
 import com.eodbot.service.MessageResponseService;
 import org.slf4j.Logger;
@@ -21,18 +22,22 @@ public class MessageResponseRestController {
     private MessageResponseService messageResponseService;
 
     @RequestMapping(value = "/message", method = RequestMethod.GET)
-    public ResponseEntity<List<MessageMapDictionary>> listAll() {
+    public ResponseEntity listAll() {
         LOGGER.info("Listing all messages");
         List<MessageMapDictionary> messageMapDictionaries = messageResponseService.findAll();
-        if(messageMapDictionaries.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        if (messageMapDictionaries.isEmpty()) {
+            return new ResponseEntity<>(new ErrorMessage("No messages were found"), HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(messageMapDictionaries, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/message", method = RequestMethod.POST)
-    public ResponseEntity<List<MessageMapDictionary>> save(@RequestBody MessageMapDictionary messageMapDictionary) {
+    public ResponseEntity save(@RequestBody MessageMapDictionary messageMapDictionary) {
         LOGGER.info("Creating MessageMapDictionary: {}", messageMapDictionary);
+
+        if (messageResponseService.findAll().stream().filter(m -> m.getKey().equals(messageMapDictionary.getKey())).count() > 0) {
+            return new ResponseEntity<>(new ErrorMessage("Already existing message key " + messageMapDictionary.getKey()), HttpStatus.BAD_REQUEST);
+        }
 
         messageResponseService.save(messageMapDictionary);
 
@@ -40,8 +45,8 @@ public class MessageResponseRestController {
     }
 
     @RequestMapping(value = "/message/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<List<MessageMapDictionary>> delete(@PathVariable Long id) {
-        LOGGER.info("Deleting MessageMapDictionary ID: {}",id);
+    public ResponseEntity delete(@PathVariable Long id) {
+        LOGGER.info("Deleting MessageMapDictionary ID: {}", id);
 
         messageResponseService.remove(id);
 

@@ -6,45 +6,35 @@
     </div>
 
     <div class="panel-body">
-        <div class="alert alert-{{alertType}} alert-dismissible" role="alert" ng-show="showAlert">
+        <div class="alert {{alertType}} alert-dismissible" role="alert" ng-show="showAlert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="hideAlert()"><span aria-hidden="true">&times;</span></button>
             <p>{{alertMessage}}</p>
         </div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Message to react</th>
-                <th>Answers to that message</th>
-                <th>Edit</th>
-            </tr>
 
-            </thead>
-            <tbody>
-            <tr ng-repeat="message in messages">
-                <td class="col-sm-1">{{message.id}}</td>
-                <td class="col-sm-5">{{message.key}}</td>
-                <td class="col-sm-5">
-                    <table class="table table-strip">
-                        <tbody>
-                        <tr class="row" ng-repeat="response in message.responses">
-                            <td>{{response.text}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        <table ng-table="tableParams" class="table table-hover table-bordered" show-filter="true">
+            <tr ng-repeat="message in $data track by $index">
+                <td data-title="'#'"  filter="{ id: 'text' }" sortable="'id'">{{message.id}}</td>
+                <td data-title="'Message to react'" filter="{ key: 'text' }" sortable="'key'">{{message.key}}</td>
+                <td data-title="'Answers to that message'" >
+
+                    <div class="" ng-repeat="response in message.responses track by $index">
+                        <p>{{response.text}}</p>
+                    </div>
+
                 </td>
-                <td class="col-sm-1">
+                <td data-title="'Actions'" header-class="col-sm-1">
                     <button type="button" class="btn btn-primary btn-sm" aria-label="Left Align" ng-click="open(message)">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" ng-click="delete(message)">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
                     </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
 
+                </td>
+
+
+            </tr>
+        </table>
     </div>
     <div class="panel-footer">
         <button type="button" class="btn btn-success" aria-label="Left Align" ng-click="open()">
