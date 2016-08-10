@@ -14,6 +14,7 @@ class DictionaryManager(object):
 		self.dictionary_request_url = 'http://'+self.server_host+':'+self.server_port+'/message'
 
 	def fetchDictionary(self):
+		print("Fetching dictionary!")
 		response = requests.get(self.dictionary_request_url, data="")
 		data = response.json()
 		return data

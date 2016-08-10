@@ -1,15 +1,16 @@
-class SimpleWordParser:
+from messageparsers import EodBotParser
+
+class SimpleWordParser(EodBotParser.EodBotParser):
 	def __init__(self, textHooksDictionary):
-		print("Initialising SimpleWordParser")
+		print("SimpleWordParser has been registered")
 		self.textHooksDictionary = textHooksDictionary
 		
-	def addKey(self, entry):
-		print(entry," has been added to the dict")
-		self.textHooksDictionary.update(entry)
 		
-	def updateDict(self, dict):
-		self.textHooksDictionary = dict
-		
+	def updateDictionary(self, newDict):
+		print("Updating dictionary current data: ",self.textHooksDictionary)		
+		print("Updating dictionary with new data: ",newDict)		
+		#self.textHooksDictionary = newDict
+	
 	def parse(self, text):
 		print ("Parsing text:[", text, "].")
 		
