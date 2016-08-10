@@ -1,6 +1,6 @@
 class SimpleWordParser:
 	def __init__(self, textHooksDictionary):
-		print("Initializing SimpleWordParser")
+		print("Initialising SimpleWordParser")
 		self.textHooksDictionary = textHooksDictionary
 		
 	def addKey(self, dict):

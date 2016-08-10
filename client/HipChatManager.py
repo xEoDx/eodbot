@@ -1,10 +1,9 @@
 import requests
-
 import configparser
 
 class HipChatManager:
 	def __init__(self):
-		print("Initializing HipChatManager. Config: ")
+		print("Initialising HipChatManager. Config: ")
 		config = configparser.ConfigParser()
 		config.read('config.ini')
 		

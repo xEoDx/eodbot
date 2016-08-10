@@ -2,7 +2,7 @@ import HipChatMonitor
 
 class EodBot:
 	def __init__(self):
-		print("Initializing Eod Bot!")			
+		print("Initialising Eod Bot!")			
 		
 	def start(self):		
 		hipChatMonitor = HipChatMonitor.HipChatMonitor()

@@ -2,3 +2,7 @@
 hipchat.room_name=
 hipchat.read_auth_token=
 hipchat.write_auth_token=
+
+[EODBOT]
+eodbot.server.host=
+eodbot.server.port=
