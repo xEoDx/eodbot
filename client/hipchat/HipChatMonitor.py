@@ -1,5 +1,5 @@
-import SimpleWordParser
-import HipChatManager
+from messageparsers import SimpleWordParser
+from hipchat import HipChatManager
 import time
 
 _MAX_SLEEP_TIME = 15

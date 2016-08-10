@@ -16,5 +16,4 @@ class DictionaryManager(object):
 	def fetchDictionary(self):
 		response = requests.get(self.dictionary_request_url, data="")
 		data = response.json()
-		print("Fetched dictionary: "+data)
-		
+		return data
