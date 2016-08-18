@@ -1,7 +1,7 @@
 from hipchat import HipChatManager
 import time
 
-_MAX_SLEEP_TIME = 15
+_MAX_SLEEP_TIME = 8
 _MIN_SLEEP_TIME = 3
 class HipChatMonitor:	
 	def __init__(self, eodBotParser):
@@ -12,7 +12,8 @@ class HipChatMonitor:
 		self.eodBotParser = eodBotParser
 
 		self.hipChatManager = HipChatManager.HipChatManager();
-		self.hipChatManager.send("EodBot has been initialized!")
+		self.hipChatManager.send("EodBot has been initialised!")
+		self.hipChatManager.send("Add your messages at: http://6dc1e2bd.fbdev.midasplayer.com/")
 		
 	def __adjustInterval(self, failed):
 		if(failed == "true"):

@@ -7,9 +7,8 @@ class EodBot:
 	def __init__(self):
 		print("Initialising Eod Bot!")			
 		
-	def start(self):		
-		
-		eodBotParser = parser.SimpleWordParser({'hello': 'morning', 'goodbye': 'bye bitch', 'hey': 'hej hej'})
+	def start(self):				
+		eodBotParser = parser.SimpleWordParser([]])
 		
 		dictionaryMonitor = DictionaryMonitor.DictionaryMonitor(eodBotParser)
 		dictionaryMonitor.start()
