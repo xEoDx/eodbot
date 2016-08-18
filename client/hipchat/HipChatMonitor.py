@@ -1,8 +1,8 @@
 from hipchat import HipChatManager
 import time
 
-_MAX_SLEEP_TIME = 8
-_MIN_SLEEP_TIME = 3
+_MAX_SLEEP_TIME = 5
+_MIN_SLEEP_TIME = 2
 class HipChatMonitor:	
 	def __init__(self, eodBotParser):
 		print("Initializing HipChatMonitor with eodBotParser: ",eodBotParser)

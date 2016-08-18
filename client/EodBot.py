@@ -8,7 +8,7 @@ class EodBot:
 		print("Initialising Eod Bot!")			
 		
 	def start(self):				
-		eodBotParser = parser.SimpleWordParser([]])
+		eodBotParser = parser.SimpleWordParser([[{}]])
 		
 		dictionaryMonitor = DictionaryMonitor.DictionaryMonitor(eodBotParser)
 		dictionaryMonitor.start()

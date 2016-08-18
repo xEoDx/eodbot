@@ -20,6 +20,6 @@ class SimpleWordParser(EodBotParser.EodBotParser):
 				if(message['key'] == word):
 					responsesLength = len(message['responses'])
 					randAnswer = randint(0,responsesLength-1)	
-					answer = message['responses'][randAnswer]
+					answer = "[EodBot] "+message['responses'][randAnswer]
 					print("Answering: ",answer)			
 					return answer		
