@@ -1,5 +1,6 @@
 [HIPCHAT]
 hipchat.room_name=
+hipchat.bot_id=
 hipchat.read_auth_token=
 hipchat.write_auth_token=
 

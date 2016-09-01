@@ -1,5 +1,5 @@
 from messageparsers import EodBotParser
-from messageparsers import SimpleWordParser as parser
+from messageparsers import SentenceWordParser as parser
 from hipchat import HipChatMonitor
 from dictionary import DictionaryMonitor
 
@@ -8,7 +8,7 @@ class EodBot:
 		print("Initialising Eod Bot!")			
 		
 	def start(self):				
-		eodBotParser = parser.SimpleWordParser([[{}]])
+		eodBotParser = parser.SentenceWordParser([[{}]])
 		
 		dictionaryMonitor = DictionaryMonitor.DictionaryMonitor(eodBotParser)
 		dictionaryMonitor.start()

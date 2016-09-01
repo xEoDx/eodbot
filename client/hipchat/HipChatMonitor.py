@@ -1,8 +1,10 @@
 from hipchat import HipChatManager
 import time
+import configparser
 
 _MAX_SLEEP_TIME = 5
 _MIN_SLEEP_TIME = 2
+_SPAM_EODBOT_URL = 250
 class HipChatMonitor:	
 	def __init__(self, eodBotParser):
 		print("Initializing HipChatMonitor with eodBotParser: ",eodBotParser)
@@ -10,10 +12,15 @@ class HipChatMonitor:
 		self.lastIdChecked = ""
 		
 		self.eodBotParser = eodBotParser
+		
+		config = configparser.ConfigParser()
+		config.read('config.ini')
+		self.bot_id=config['HIPCHAT']['hipchat.bot_id']
 
 		self.hipChatManager = HipChatManager.HipChatManager();
-		self.hipChatManager.send("EodBot has been initialised!")
-		self.hipChatManager.send("Add your messages at: http://6dc1e2bd.fbdev.midasplayer.com/")
+		self.spamLastEodBotUrlTime = 0
+		self.hipChatManager.send("[EodBot] I've been initialised! Troll time just started :)")
+		self.hipChatManager.send("[EodBot] Plz configure some trolling stuff in the following page: http://6dc1e2bd.fbdev.midasplayer.com/")
 		
 	def __adjustInterval(self, failed):
 		if(failed == "true"):
@@ -25,15 +32,21 @@ class HipChatMonitor:
 	def start(self):	
 		while 1==1:
 			newestMessage = self.hipChatManager.fetch()
-			if(newestMessage["id"] != self.lastIdChecked):
+			
+			if((str(newestMessage["from"]["id"]) != self.bot_id) and (newestMessage["id"] != self.lastIdChecked)):
 				self.lastIdChecked = newestMessage["id"]
 				print("Parsing message: ",newestMessage['message'])
 				messageToSend = self.eodBotParser.parse(newestMessage['message'])
 				if(messageToSend != None):
 					self.hipChatManager.send(messageToSend)
-				self.__adjustInterval("false")
+				self.__adjustInterval("false")			
 			else:
 				self.__adjustInterval("true")
 				
 			print("Sleeping for ",self.sleepTime," seconds")
 			time.sleep(self.sleepTime)
+			
+			self.spamLastEodBotUrlTime += 1
+			if(self.spamLastEodBotUrlTime >= _SPAM_EODBOT_URL):
+				self.hipChatManager.send("[EodBot] Plz configure some trolling stuff in the following page: http://6dc1e2bd.fbdev.midasplayer.com/")
+				self.spamLastEodBotUrlTime = 0
