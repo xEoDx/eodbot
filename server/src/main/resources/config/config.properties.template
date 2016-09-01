@@ -1,0 +1,5 @@
+## MySQL config used by PersistenceConfiguration
+mysql.database.url=
+mysql.database.driver=
+mysql.database.user=
+mysql.database.password=

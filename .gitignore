@@ -4,3 +4,4 @@ server/target/*
 server/.idea/
 .idea/*
 *.iml
+server/src/main/resources/config/*.properties

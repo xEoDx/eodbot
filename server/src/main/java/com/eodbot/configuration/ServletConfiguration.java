@@ -17,28 +17,6 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "com.eodbot")
 public class ServletConfiguration extends WebMvcConfigurerAdapter {
 
-    /*
-    @Bean
-    public VelocityConfigurer velocityConfig() {
-        VelocityConfigurer velocityConfigurer = new VelocityConfigurer();
-        velocityConfigurer.setResourceLoader(new DefaultResourceLoader());
-        velocityConfigurer.setResourceLoaderPath("/WEB-INF/velocity/");
-        return velocityConfigurer;
-    }
-
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        VelocityViewResolver viewResolver = new VelocityViewResolver();
-
-        viewResolver.setViewClass(VelocityView.class);
-        viewResolver.setCache(true);
-        viewResolver.setPrefix("");
-        viewResolver.setSuffix(".html");
-        viewResolver.setExposeSpringMacroHelpers(true);
-
-        registry.viewResolver(viewResolver);
-    }
-     */
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -50,7 +28,6 @@ public class ServletConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //  registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/views/");
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
     }
 }
