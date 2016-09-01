@@ -66,6 +66,7 @@ angular.module('hipChatMessagesModule')
                 });
             };
 
+
             function updateTable(data){
                 $scope.tableParams.reload().then(function(r) {
                     if (data.length === 0 && $scope.tableParams.total() > 0) {
@@ -78,7 +79,7 @@ angular.module('hipChatMessagesModule')
 
             $scope.tableParams = new NgTableParams({
                 page: 1,            // show first page
-                count: 50           // count per page
+                count: 10           // count per page
             }, {
                 getData: function(params) {
                     // ajax request to api
@@ -86,12 +87,13 @@ angular.module('hipChatMessagesModule')
                         var orderedData = params.sorting() ?
                             $filter('orderBy')(data, params.orderBy()) : $scope.items;
 
+                        params.total(orderedData.length); // set total for recalc pagination
+
                         orderedData = params.filter() ?
                             $filter('filter')(orderedData, params.filter()) : orderedData;
 
                         orderedData = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
-                        params.total(orderedData.length); // set total for recalc pagination
                         return orderedData;
                     });
                 }
