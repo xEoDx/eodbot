@@ -44,6 +44,15 @@ public class MessageResponseRestController {
         return listAll();
     }
 
+    @RequestMapping(value = "/message", method = RequestMethod.PUT)
+    public ResponseEntity update(@RequestBody MessageMapDictionary messageMapDictionary) {
+        LOGGER.info("Updating MessageMapDictionary: {}", messageMapDictionary);
+
+        messageResponseService.save(messageMapDictionary);
+
+        return listAll();
+    }
+
     @RequestMapping(value = "/message/{id}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable Long id) {
         LOGGER.info("Deleting MessageMapDictionary ID: {}", id);

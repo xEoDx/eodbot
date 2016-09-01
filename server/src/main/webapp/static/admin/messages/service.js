@@ -31,9 +31,22 @@ angular.module('hipChatMessagesModule')
                     return $q.reject(response);
                 });
             },
-            update: function (message) {
+            save: function (message) {
                 return $http({
                     method: 'POST',
+                    url: '/message',
+                    data: message
+                }).then(function successCallback(response) {
+                    $log.info("Message ",message," has been updated");
+                    return parseMessages(response);
+                }, function errorCallback(response) {
+                    $log.error("Error on updating message: ",response);
+                    return $q.reject(response);
+                });
+            },
+            update: function (message) {
+                return $http({
+                    method: 'PUT',
                     url: '/message',
                     data: message
                 }).then(function successCallback(response) {

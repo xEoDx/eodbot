@@ -15,7 +15,7 @@ angular.module('hipChatMessagesModule')
 
                 }, function (error) {
                     $log.warn("Error loading messages: ", error);
-                    setAlertStatus("error", error.data.message);
+                    setAlertStatus("danger", error.data.message);
                 });
 
             };
@@ -25,7 +25,7 @@ angular.module('hipChatMessagesModule')
                     updateTable(response);
                     setAlertStatus("success", "Message id "+message.id+" has been deleted!");
                 }, function(error){
-                    setAlertStatus("error", error.data.message);
+                    setAlertStatus("danger", error.data.message);
 
                 });
             };
@@ -42,13 +42,24 @@ angular.module('hipChatMessagesModule')
                 });
 
                 modalInstance.result.then(function (updatedItem) {
-                    MessagesService.update(updatedItem).then(function (response) {
-                        $log.log("Done! Response is: ", response);
-                        updateTable(response);
-                        setAlertStatus("success", "Message id "+updatedItem.id+" has been updated!");
-                    }, function(error){
-                        setAlertStatus("error", error.data.message);
-                    });
+                    $log.log("Updating item ",updatedItem);
+                    if(updatedItem.id == 0) {
+                        MessagesService.save(updatedItem).then(function (response) {
+                            $log.log("Done! Response is: ", response);
+                            updateTable(response);
+                            setAlertStatus("success", "Message id "+updatedItem.id+" has been updated!");
+                        }, function(error){
+                            setAlertStatus("danger", error.data.message);
+                        });
+                    } else {
+                        MessagesService.update(updatedItem).then(function (response) {
+                            $log.log("Done! Response is: ", response);
+                            updateTable(response);
+                            setAlertStatus("success", "Message id "+updatedItem.id+" has been updated!");
+                        }, function(error){
+                            setAlertStatus("danger", error.data.message);
+                        });
+                    }
 
                 }, function () {
                     $log.log('Modal dismissed at: ' + new Date());
@@ -67,7 +78,7 @@ angular.module('hipChatMessagesModule')
 
             $scope.tableParams = new NgTableParams({
                 page: 1,            // show first page
-                count: 10           // count per page
+                count: 50           // count per page
             }, {
                 getData: function(params) {
                     // ajax request to api
@@ -110,7 +121,6 @@ angular.module('hipChatMessagesModule')
                 responses: [{text: ""}]
             }
         }
-
 
         $scope.ok = function () {
             $scope.message = parseMessageAnswer($scope.message);
