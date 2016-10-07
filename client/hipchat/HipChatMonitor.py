@@ -4,7 +4,7 @@ import configparser
 
 _MAX_SLEEP_TIME = 5
 _MIN_SLEEP_TIME = 2
-_SPAM_EODBOT_URL = 250
+_SPAM_EODBOT_URL = 350
 class HipChatMonitor:	
 	def __init__(self, eodBotParser):
 		print("Initializing HipChatMonitor with eodBotParser: ",eodBotParser)
@@ -20,7 +20,7 @@ class HipChatMonitor:
 		self.hipChatManager = HipChatManager.HipChatManager();
 		self.spamLastEodBotUrlTime = 0
 		self.hipChatManager.send("[EodBot] I've been initialised! Troll time just started :)")
-		self.hipChatManager.send("[EodBot] Plz configure some trolling stuff in the following page: http://6dc1e2bd.fbdev.midasplayer.com/")
+		self.hipChatManager.send("[EodBot] Visit http://6dc1e2bd.fbdev.midasplayer.com/ to teach me how to troll")
 		
 	def __adjustInterval(self, failed):
 		if(failed == "true"):
@@ -31,9 +31,8 @@ class HipChatMonitor:
 
 	def start(self):	
 		while 1==1:
-			newestMessage = self.hipChatManager.fetch()
-			
-			if((str(newestMessage["from"]["id"]) != self.bot_id) and (newestMessage["id"] != self.lastIdChecked)):
+			newestMessage = self.hipChatManager.fetch()			
+			if((str(newestMessage["from"]) != "Sassy") and (str(newestMessage["from"]["id"]) != self.bot_id) and (newestMessage["id"] != self.lastIdChecked)):
 				self.lastIdChecked = newestMessage["id"]
 				print("Parsing message: ",newestMessage['message'])
 				messageToSend = self.eodBotParser.parse(newestMessage['message'])
@@ -48,5 +47,5 @@ class HipChatMonitor:
 			
 			self.spamLastEodBotUrlTime += 1
 			if(self.spamLastEodBotUrlTime >= _SPAM_EODBOT_URL):
-				self.hipChatManager.send("[EodBot] Plz configure some trolling stuff in the following page: http://6dc1e2bd.fbdev.midasplayer.com/")
+				self.hipChatManager.send("[EodBot] Visit http://6dc1e2bd.fbdev.midasplayer.com/ to teach me how to troll")
 				self.spamLastEodBotUrlTime = 0
