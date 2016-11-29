@@ -4,7 +4,7 @@ import configparser
 
 _MAX_SLEEP_TIME = 5
 _MIN_SLEEP_TIME = 2
-_SPAM_EODBOT_URL = 350
+_SPAM_EODBOT_URL = 3500
 class HipChatMonitor:	
 	def __init__(self, eodBotParser):
 		print("Initializing HipChatMonitor with eodBotParser: ",eodBotParser)
